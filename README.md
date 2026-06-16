@@ -25,7 +25,7 @@ to build the project :
 git clone https://github.com/Gazach/moonlight-kernel
 ```
 ```bash
-cd moonlight-kernel/src/
+cd moonlight-kernel/
 ```
 ```bash
 make
@@ -44,7 +44,7 @@ make
 ### Run the project :
 
 ```bash
-qemu-system-i386 -cdrom moonlight.iso
+qemu-system-i386 -cdrom build/moonlight.iso
 ```
 
 ## Project inspired
