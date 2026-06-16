@@ -22,6 +22,12 @@ CFLAGS := --target=i386-pc-none-elf \
           -nostdlib \
           -fno-builtin \
           -fno-stack-protector \
+          -mno-sse \
+          -mno-sse2 \
+          -mno-avx \
+          -mno-80387 \
+          -mno-mmx \
+          -march=i686 \
           -I$(SRCDIR)/kernel \
           -I$(SRCDIR)/kernel/common \
           -I$(SRCDIR)/kernel/std
