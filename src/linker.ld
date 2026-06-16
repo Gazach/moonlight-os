@@ -1,19 +1,15 @@
-/* linker.ld */
 ENTRY(_start)
 
 SECTIONS {
-    . = 1M;   /* load at 1MB — standard for x86 */
-
-    .boot ALIGN(4) : {
-        *(.multiboot_header)
-    }
+    . = 1M;
 
     .text ALIGN(4K) : {
+        *(.multiboot_header)
         *(.text)
     }
 
     .rodata ALIGN(4K) : {
-        *(.rodata)
+        *(.rodata*)
     }
 
     .data ALIGN(4K) : {
@@ -21,7 +17,9 @@ SECTIONS {
     }
 
     .bss ALIGN(4K) : {
+        _bss_start = .;
         *(COMMON)
         *(.bss)
+        _bss_end = .;
     }
 }

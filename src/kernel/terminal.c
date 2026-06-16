@@ -52,34 +52,39 @@ static void terminal_update_cursor(void)
 {
 	size_t pos = terminal_row * VGA_WIDTH + terminal_column;
 	
-	/* Set cursor position low byte */
-	__asm__ volatile("outb %0, %1" : : "a"((unsigned char)(pos & 0xFF)), "d"((unsigned short)0x3D5));
-	__asm__ volatile("outb %0, %1" : : "a"((unsigned char)0x0E), "d"((unsigned short)0x3D4));
-	
-	/* Set cursor position high byte */
-	__asm__ volatile("outb %0, %1" : : "a"((unsigned char)((pos >> 8) & 0xFF)), "d"((unsigned short)0x3D5));
-	__asm__ volatile("outb %0, %1" : : "a"((unsigned char)0x0F), "d"((unsigned short)0x3D4));
+	 /* Low byte */
+    __asm__ volatile("outb %0, %1" : : "a"((unsigned char)0x0F), "d"((unsigned short)0x3D4));
+    __asm__ volatile("outb %0, %1" : : "a"((unsigned char)(pos & 0xFF)), "d"((unsigned short)0x3D5));
+
+    /* High byte */
+    __asm__ volatile("outb %0, %1" : : "a"((unsigned char)0x0E), "d"((unsigned short)0x3D4));
+    __asm__ volatile("outb %0, %1" : : "a"((unsigned char)((pos >> 8) & 0xFF)), "d"((unsigned short)0x3D5));
 }
 
 void terminal_putchar(char c) 
 {
-	if (c == '\n') {
-		terminal_column = 0;
+    if (c == '\n') {
+        terminal_column = 0;
         terminal_row++;
-		if (terminal_row == VGA_HEIGHT) {
-			terminal_scroll();
+        if (terminal_row == VGA_HEIGHT) {
+            terminal_scroll();
             terminal_row = VGA_HEIGHT - 1;
-		}
-		terminal_update_cursor();
-		return;
-	}
-	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
-	if (++terminal_column == VGA_WIDTH) {
-		terminal_column = 0;
-		if (++terminal_row == VGA_HEIGHT)
-			terminal_row = 0;
-	}
-	terminal_update_cursor();
+        }
+        terminal_update_cursor();
+        return;
+    }
+
+    terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+
+    if (++terminal_column == VGA_WIDTH) {
+        terminal_column = 0;
+        if (++terminal_row == VGA_HEIGHT) {
+            terminal_scroll();
+            terminal_row = VGA_HEIGHT - 1;
+        }
+    }
+
+    terminal_update_cursor();
 }
 
 void terminal_write(const char* data, size_t size) 

@@ -39,11 +39,14 @@ LDFLAGS  := -m elf_i386 -T $(SRCDIR)/linker.ld
 C_SRCS := $(SRCDIR)/kernel/kernel.c \
           $(SRCDIR)/kernel/vga.c \
           $(SRCDIR)/kernel/terminal.c \
+          $(SRCDIR)/kernel/idt.c \
+          $(SRCDIR)/kernel/isr.c \
           $(SRCDIR)/kernel/std/printf.c \
           $(SRCDIR)/kernel/common/string.c \
           $(SRCDIR)/kernel/common/div64.c
 
-ASM_SRCS := $(SRCDIR)/boot/boot.asm
+ASM_SRCS := $(SRCDIR)/boot/boot.asm \
+			$(SRCDIR)/kernel/isr_stub.asm
 
 # Objects (mirror source tree under build/)
 C_OBJS   := $(C_SRCS:$(SRCDIR)/%.c=$(BUILDDIR)/%.o)

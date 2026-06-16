@@ -4,3 +4,4 @@ kernel.o
 kernel.elf
 moonlight.iso
 build/
+*.log
