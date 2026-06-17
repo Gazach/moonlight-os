@@ -6,6 +6,10 @@
 #include "arch/interupt/pic.h"
 #include "arch/interupt/irq.h"
 
+//driver header
+#include "driver/ps2.h"
+
+// libary headers
 #include "std/printf.h"
 #include "common/string.h"
 
@@ -25,8 +29,10 @@ void kernel_main(void) {
     idt_init();
     pic_init();
     irq_init();
+    PS2_init();
+
     __asm__ volatile("sti");
 
-    printf("IRQs ready\n");
+    printf("Success!\n");
     for(;;);
 }

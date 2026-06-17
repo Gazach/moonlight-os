@@ -30,7 +30,10 @@ CFLAGS := --target=i386-pc-none-elf \
           -march=i686 \
           -I$(SRCDIR)/kernel \
           -I$(SRCDIR)/kernel/common \
-          -I$(SRCDIR)/kernel/std
+          -I$(SRCDIR)/kernel/std \
+          -I$(SRCDIR)/kernel/driver \
+          -I$(SRCDIR)/kernel/arch \
+          -I$(SRCDIR)/kernel/arch/interupt \
 
 ASMFLAGS := -f elf32
 LDFLAGS  := -m elf_i386 -T $(SRCDIR)/linker.ld
@@ -39,15 +42,17 @@ LDFLAGS  := -m elf_i386 -T $(SRCDIR)/linker.ld
 C_SRCS := $(SRCDIR)/kernel/kernel.c \
           $(SRCDIR)/kernel/vga.c \
           $(SRCDIR)/kernel/terminal.c \
-          $(SRCDIR)/kernel/idt.c \
-          $(SRCDIR)/kernel/pic.c \
-          $(SRCDIR)/kernel/isr.c \
+          $(SRCDIR)/kernel/arch/interupt/idt.c \
+          $(SRCDIR)/kernel/arch/interupt/pic.c \
+          $(SRCDIR)/kernel/arch/interupt/isr.c \
           $(SRCDIR)/kernel/std/printf.c \
           $(SRCDIR)/kernel/common/string.c \
-          $(SRCDIR)/kernel/common/div64.c
+          $(SRCDIR)/kernel/common/div64.c \
+          $(SRCDIR)/kernel/driver/ps2.c \
+          $(SRCDIR)/kernel/driver/keyboard.c \
 
 ASM_SRCS := $(SRCDIR)/boot/boot.asm \
-			$(SRCDIR)/kernel/isr_stub.asm
+			$(SRCDIR)/kernel/arch/interupt/isr_stub.asm
 
 # Objects (mirror source tree under build/)
 C_OBJS   := $(C_SRCS:$(SRCDIR)/%.c=$(BUILDDIR)/%.o)

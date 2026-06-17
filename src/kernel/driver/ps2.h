@@ -27,4 +27,10 @@
 #define PS2_TEST_FIRST_PORT 0xAB
 #define PS2_TEST_SECOND_PORT 0xA9
 
+void PS2_init();
+uint8_t PS2_Status();
+uint8_t PS2_ReadData();
+void PS2_WriteData(uint8_t data);
+void PS2_WriteCommand(uint8_t command);
+
 #endif // PS2_H
