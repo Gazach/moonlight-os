@@ -1,6 +1,6 @@
 #include "keyboard.h"
-#include "../arch/interupt/irq.h"
-#include "../arch/interupt/pic.h"
+#include "../arch/x86/interupt/irq.h"
+#include "../arch/x86/interupt/pic.h"
 #include "ps2.h"
 #include "../terminal.h"
 

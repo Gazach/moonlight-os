@@ -1,11 +1,11 @@
 #include "shell_cmd.h"
 
+#include "../arch/x86/cpu.h"
+
+// Basic shell commands
+
 void cmd_help(void) {
-    printf("Commands:\n");
-    printf("  help       show this message\n");
-    printf("  clear      clear the screen\n");
-    printf("  echo       print arguments\n");
-    printf("  about      show OS info\n");
+    help_list_message();
 }
 
 void cmd_clear(void) {
@@ -24,4 +24,19 @@ void cmd_about(void) {
     printf("Moonlight OS\n");
     printf("Arch: x86 (i686)\n");
     printf("Built with clang + nasm\n");
+}
+
+void cmd_version(void) {
+    printf("Moonlight OS version: %d.%d.%d\n", KERNEL_VERSION_MAJOR, KERNEL_VERSION_MINOR, KERNEL_VERSION_PATCH);
+}
+
+void cmd_shell_version(void) {
+    printf("MoonShell version: %d.%d.%d\n", SHELL_VERSION_MAJOR, SHELL_VERSION_MINOR, SHELL_VERSION_PATCH);
+}
+
+// Moonfetch command to display system information
+
+void cmd_moonfetch(void) {
+    moonfetch_message();
+
 }

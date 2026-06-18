@@ -1,7 +1,7 @@
 #include "IDT.h"
 #include "pic.h"
 #include "irq.h"
-#include "../../terminal.h"
+#include "../../../terminal.h"
 
 void isr_handler() {
     terminal_writestring("!!! interrupt caught !!!\n");

@@ -1,8 +1,8 @@
 //kernel header
 #include "terminal.h"
-#include "arch/interupt/idt.h"
-#include "arch/interupt/pic.h"
-#include "arch/interupt/irq.h"
+#include "arch/x86/interupt/idt.h"
+#include "arch/x86/interupt/pic.h"
+#include "arch/x86/interupt/irq.h"
 #include "shell/shell.h"
 
 //driver header

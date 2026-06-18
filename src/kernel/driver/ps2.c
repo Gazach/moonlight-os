@@ -1,5 +1,5 @@
 #include "ps2.h"
-#include "../arch/io.h"
+#include "../arch/x86/io.h"
 
 //check the status of the PS/2 controller
 uint8_t PS2_Status() {

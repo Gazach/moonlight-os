@@ -1,6 +1,6 @@
 #include "irq.h"
 #include "pic.h"
-#include "../../terminal.h"
+#include "../../../terminal.h"
 
 // function pointer type for IRQ handlers
 typedef void (*irq_handler_t)(void);
