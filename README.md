@@ -9,7 +9,7 @@ Don't expect a production-ready operating system — this is simply a fun projec
 ## Build
 
 ### Target platform
-x86_64
+x86
 
 <hr>
 
