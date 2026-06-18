@@ -27,9 +27,6 @@ git clone https://github.com/Gazach/moonlight-kernel
 ```bash
 cd moonlight-kernel/
 ```
-```bash
-make
-```
 
 if you want to clean and rebuild :
 
