@@ -63,15 +63,31 @@ static void terminal_update_cursor(void)
 
 void terminal_putchar(char c) 
 {
-    if (c == '\n') {
-        terminal_column = 0;
-        terminal_row++;
-        if (terminal_row == VGA_HEIGHT) {
-            terminal_scroll();
-            terminal_row = VGA_HEIGHT - 1;
-        }
-        terminal_update_cursor();
-        return;
+    switch (c) {
+        case '\n':
+            terminal_column = 0;
+            if (++terminal_row == VGA_HEIGHT) {
+                terminal_scroll();
+                terminal_row = VGA_HEIGHT - 1;
+                terminal_update_cursor();
+            }
+            return;
+
+        case '\r':
+            terminal_column = 0;
+            terminal_update_cursor();
+            return;
+
+        case '\b':
+            if (terminal_column > 0) {
+                terminal_column--;
+                terminal_putentryat(' ', terminal_color, terminal_column, terminal_row);
+                terminal_update_cursor();
+            }
+            return;
+
+        default:
+            break;
     }
 
     terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
