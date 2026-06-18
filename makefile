@@ -34,6 +34,7 @@ CFLAGS := --target=i386-pc-none-elf \
           -I$(SRCDIR)/kernel/driver \
           -I$(SRCDIR)/kernel/arch \
           -I$(SRCDIR)/kernel/arch/interupt \
+          -I$(SRCDIR)/kernel/shell
 
 ASMFLAGS := -f elf32
 LDFLAGS  := -m elf_i386 -T $(SRCDIR)/linker.ld
@@ -52,6 +53,9 @@ C_SRCS := $(SRCDIR)/kernel/kernel.c \
           $(SRCDIR)/kernel/common/message.c \
           $(SRCDIR)/kernel/driver/ps2.c \
           $(SRCDIR)/kernel/driver/keyboard.c \
+          $(SRCDIR)/kernel/shell/shell.c \
+          $(SRCDIR)/kernel/shell/shell_cmd.c
+
 
 ASM_SRCS := $(SRCDIR)/boot/boot.asm \
 			$(SRCDIR)/kernel/arch/interupt/isr_stub.asm

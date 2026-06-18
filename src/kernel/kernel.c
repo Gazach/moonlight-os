@@ -3,6 +3,7 @@
 #include "arch/interupt/idt.h"
 #include "arch/interupt/pic.h"
 #include "arch/interupt/irq.h"
+#include "shell/shell.h"
 
 //driver header
 #include "driver/ps2.h"
@@ -44,11 +45,6 @@ void kernel_main(void) {
         return;
     }
 
-
-    char buf[256];
-    while (1) {
-        printf("> ");
-        keyboard_readline(buf, sizeof(buf));
-        printf("you typed: %s\n", buf);
-    }
+    // run the shell
+    shell_run();
 }
