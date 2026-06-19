@@ -1,6 +1,7 @@
 #include "shell_cmd.h"
 
 #include "../arch/x86/cpu.h"
+#include "../memory/m_heap.h"
 
 // Basic shell commands
 

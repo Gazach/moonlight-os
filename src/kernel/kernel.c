@@ -7,6 +7,7 @@
 
 //memory header
 #include "memory/pmm.h"
+#include "memory/m_heap.h"
 
 //driver header
 #include "driver/ps2.h"
@@ -41,6 +42,9 @@ int kernel_init(uint32_t mb_info_addr) {
 
     // Initialize the Physical Memory Manager (PMM)
     pmm_init(mb_info_addr); // Assuming the multiboot info structure is
+
+    // Initialize the heap
+    heap_init();
 
     return 0;
 }
