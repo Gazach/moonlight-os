@@ -49,6 +49,7 @@ C_SRCS := $(SRCDIR)/kernel/kernel.c \
           $(SRCDIR)/kernel/arch/x86/interupt/irq.c \
           $(SRCDIR)/kernel/arch/x86/interupt/pic.c \
           $(SRCDIR)/kernel/arch/x86/interupt/isr.c \
+          $(SRCDIR)/kernel/arch/x86/gdt/gdt.c \
           $(SRCDIR)/kernel/arch/x86/cpu.c \
           $(SRCDIR)/kernel/std/printf.c \
           $(SRCDIR)/kernel/common/string.c \
@@ -65,7 +66,9 @@ C_SRCS := $(SRCDIR)/kernel/kernel.c \
 
 
 ASM_SRCS := $(SRCDIR)/boot/boot.asm \
-			$(SRCDIR)/kernel/arch/x86/interupt/isr_stub.asm
+			$(SRCDIR)/kernel/arch/x86/interupt/isr_stub.asm \
+            $(SRCDIR)/kernel/arch/x86/gdt/gdt_flush.asm \
+            
 
 # Objects (mirror source tree under build/)
 C_OBJS   := $(C_SRCS:$(SRCDIR)/%.c=$(BUILDDIR)/%.o)

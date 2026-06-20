@@ -1,8 +1,10 @@
 //kernel header
 #include "terminal.h"
+#include "arch/x86/io.h"
 #include "arch/x86/interupt/idt.h"
 #include "arch/x86/interupt/pic.h"
 #include "arch/x86/interupt/irq.h"
+#include "arch/x86/gdt/gdt.h"
 #include "shell/shell.h"
 
 //memory header
@@ -32,11 +34,17 @@
 
 // function to initialize the kernel
 int kernel_init(uint32_t mb_info_addr) {
-    terminal_initialize(); // initialize terminal for output
-    idt_init();
+    terminal_initialize();
+
+    __asm__ volatile("cli");
+
+    // initialize GDT, IDT, PIC, PS/2 controller
     pic_init();
+    gdt_init();
+    idt_init();
     PS2_init();
 
+    // initialize IRQ handlers and enable interrupts
     keyboard_init();      // hardware setup
     timer_irq_init();     // register timer IRQ
     keyboard_irq_init();  // register keyboard IRQ
@@ -45,12 +53,9 @@ int kernel_init(uint32_t mb_info_addr) {
 
     // initialize memory management
     pmm_init(mb_info_addr);
-    // initialize heap and paging
     heap_init();
     paging_init();
-
-
-
+    
     return 0;
 }
 

@@ -1,4 +1,5 @@
 #include "isr.h"
+#include "irq.h"
 #include "../../../std/printf.h"
 #include "../../../terminal.h"
 
@@ -49,23 +50,28 @@ void dump_registers(interrupt_frame_t* frame) {
 
 // ISR handler for CPU exceptions
 void isr_handler(interrupt_frame_t* frame) {
-    if (frame->int_no >= 32) return;  // not a CPU exception
+    if (frame->int_no >= 32 && frame->int_no <= 47) {
+        // hardware IRQ — call irq_handler
+        uint8_t irq = frame->int_no - 32;
+        irq_handler(irq);
+        return;
+    }
 
-    // breakpoint — special case, recoverable
+    if (frame->int_no >= 32) return;  // unknown vector
+
+    // breakpoint — recoverable
     if (frame->int_no == 3) {
         printf("\nBreakpoint hit:\n");
         dump_registers(frame);
         return;
     }
 
-    // all other exceptions — fatal
+    // fatal exception
     printf("\n--- KERNEL EXCEPTION ---\n");
     printf("Exception : %s (#%u)\n",
         exception_names[frame->int_no], frame->int_no);
-
     dump_registers(frame);
 
-    // page fault extra info
     if (frame->int_no == 14) {
         uint32_t cr2;
         __asm__ volatile("mov %%cr2, %0" : "=r"(cr2));

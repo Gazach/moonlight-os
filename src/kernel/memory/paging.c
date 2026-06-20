@@ -51,17 +51,17 @@ void paging_init(void) {
     // identity map the kernel (1MB to 4MB)
     identity_map_range(0x100000, 0x400000, PAGE_PRESENT | PAGE_WRITABLE);
 
+    // identity map the stack (0x80000 to 0x90000)
+    identity_map_range(0x80000, 0x90000, PAGE_PRESENT | PAGE_WRITABLE);
+
     // identity map the heap (16MB to 32MB)
     identity_map_range(0x1000000, 0x2000000, PAGE_PRESENT | PAGE_WRITABLE);
 
-    // load page directory into CR3
+    // load CR3 and enable paging
     __asm__ volatile("mov %0, %%cr3" : : "r"(page_directory));
-
-    // enable paging by setting bit 31 of CR0
     uint32_t cr0;
     __asm__ volatile("mov %%cr0, %0" : "=r"(cr0));
     cr0 |= (1 << 31);
     __asm__ volatile("mov %0, %%cr0" : : "r"(cr0));
 
-    // printf("Paging: enabled\n");
 }
